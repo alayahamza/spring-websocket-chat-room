@@ -1,9 +1,19 @@
 package com.messenger.service;
 
+import java.text.DateFormat;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+
 
 import com.messenger.model.Message;
 import com.messenger.repository.MessageRepository;
@@ -34,7 +44,13 @@ public class MesageServiceImpl implements MessageService {
 
 	@Override
 	public List<Message> findAll() {
-		return messageRepository.findAll();
+		List<Message> list  = messageRepository.findAll();
+		 list.stream().forEach(msg -> { 
+			 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			msg.setDate(formatter.format(new Date() ));
+		});
+		 return list;
+		 
 	}
 
 }
